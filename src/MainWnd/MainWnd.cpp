@@ -83,7 +83,6 @@ void MainWnd::_initWidget() {
         [&](const Gtk::ScrollType scrollType, const double value) {
             // m_bassMain->pause();
             if (m_bassMain->getLength() < m_scaleTime->get_value()) return true;
-            Logger::Log("onTimeScaleChanged: " + std::to_string(m_scaleTime->get_value()), Logger::CALL);
             m_bassMain->position(m_scaleTime->get_value() + 1); 
             std::this_thread::sleep_for(std::chrono::milliseconds(20));
             return true;
@@ -130,14 +129,12 @@ void MainWnd::_initWidget() {
 
 void MainWnd::_setTimeOut(const int milliSeconds) {
     Glib::signal_timeout().connect(sigc::mem_fun(*this, &MainWnd::updateTime), milliSeconds);
-    // Logger::Log({"TimeOut updated: ", milliSeconds}, Logger::MESSAGE);
 }
 
 bool MainWnd::updateTime() {
     double playingTime = m_bassMain->position();
-    Logger::Log("updateTime: " + std::to_string(playingTime), Logger::CALL);
-
     DWORD status = m_bassMain->getStatus();
+
     if (status != BASS_ACTIVE_PLAYING) return true;
 
     m_scaleTime->set_value(playingTime);
@@ -145,8 +142,6 @@ bool MainWnd::updateTime() {
 }
 
 void MainWnd::onMenuOpenClicked() {
-    Logger::Log("onMenuOpenClicked", Logger::CALL);
-
     Gtk::FileChooserDialog dialog("Choose an audio", Gtk::FILE_CHOOSER_ACTION_OPEN);
     auto filter = Gtk::FileFilter::create();
     filter->add_mime_type("audio/mpeg");
@@ -157,7 +152,6 @@ void MainWnd::onMenuOpenClicked() {
     dialog.add_button("_Open", Gtk::RESPONSE_OK);
     switch (dialog.run()) {
         case Gtk::RESPONSE_OK: setAudio(dialog.get_filename()); break;
-        case Gtk::RESPONSE_CANCEL: Logger::Log("Cancel", Logger::CALL); break;
         default: return;
     }
 }
