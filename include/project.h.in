@@ -1,0 +1,8 @@
+#ifndef PROJECT_H
+#define PROJECT_H
+
+#pragma once
+#define PROJECT_VERSION "@PROJECT_VERSION@"
+#define PROJECT_NAME "@PROJECT_NAME@"
+
+#endif // PROJECT_H
