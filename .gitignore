@@ -1,5 +1,11 @@
 # Build directory
 /build/
 
-# Visual Studio Code Settings
+# Visual Studio Code Settings directory
 /.vscode/
+
+# Glade temp file
+*.glade~
+
+# MP3 file for debug
+*.mp3
